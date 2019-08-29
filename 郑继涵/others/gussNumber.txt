@@ -1,0 +1,31 @@
+import random
+for n in range(100):
+    level = input('请选择游戏难度(1:easy， 2：normal， 3：hard)')
+    if level == '1':
+        rank = 10
+    elif level == '2':
+        rank = 20
+    elif level == '3':
+        rank = 30
+    answer = random.randint(1, rank)
+    choice = ''
+    flag = True
+    for i in range(3):
+        print('请在1 ~ %d中选一个数字:' % rank, end=' ')
+        guess = int(input(''))
+        if guess == answer:
+            choice = input('猜对了！，继续玩(y)/结束游戏(n)')
+            flag = False
+            break
+        elif guess > answer:
+            print('too big')
+        else:
+            print('too small')
+    if flag:
+        print('正确答案是:', end='')
+        print(answer)
+        choice = input('很遗憾，机会没了，继续玩(y)/结束游戏(n)')
+    if choice == 'y':
+        continue
+    if choice == 'n':
+        break
