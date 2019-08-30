@@ -48,6 +48,7 @@ while True:
     if ball_y > 700:  #   球超过屏幕
         ball_y = -30
         ball_x = random.randint(20, 480)
+        lives = lives - 1
 
     if ball_y < 0 and speedy<0:  #   球超过屏幕
         # speedx = -speedx
@@ -61,8 +62,10 @@ while True:
             speedx = -speedx
             speedy = -speedy
             score += 1
-        else:
-            lives = lives-1
+        # else:
+        #     lives = lives-1
+
+
 
     keys = pygame.key.get_pressed()
 

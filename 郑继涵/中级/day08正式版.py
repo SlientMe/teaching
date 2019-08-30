@@ -39,8 +39,8 @@ while True:
             sys.exit()
 
     screen.fill((255,255,255))
-    print_text(screen, font1, 0, 0, '命数:' + str(lives))
-    print_text(screen, font1, 500, 0, '分数:' + str(score))
+    print_text(screen, font1, 0, 0, 'live:' + str(lives))
+    print_text(screen, font1, 500, 0, 'socre:' + str(score))
     ball_y += speedy
     ball_x += speedx
 
