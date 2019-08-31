@@ -2,23 +2,26 @@ import pygame
 import sys
 import random
 
-# 这节课主要内容是添加了分数和生命值   改变小球的方向
+# 这节课主要内容是将屏幕上自己画的内容替换为图片。 添加背景图片
 
 pygame.init()
 screen = pygame.display.set_mode((640,700))
 pygame.display.set_caption("BAll")
 
+ball = pygame.image.load('./img/ball.png')  # 加载小球图片图片
+sport = pygame.image.load('./img/sport.png')  # 添加挡板图片
+bg = pygame.image.load('./img/background.png')  # 加载小球图片图片
+ballrect = ball.get_rect()  # 获取矩形区域
+sportrect = sport.get_rect()
+
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 
-ball_x = 110
-ball_y = 100
 
-rect_x = 300
-rect_y = 650
+sportrect.y = 650
 
-speed = 10
+speed = 5
 speedx = speed
 speedy = speed
 clock = pygame.time.Clock()  # 设置时钟
@@ -32,48 +35,51 @@ lives = 3
 score = 0
 
 while True:
-    print(ball_y)
+    # print(ballrect.y)
     clock.tick(60)  # 每秒执行60次
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
 
     screen.fill((255,255,255))
+    # screen.blit(bg, (0, 0))   # 添加背景颜色。
+
     print_text(screen, font1, 0, 0, 'live:' + str(lives))
     print_text(screen, font1, 500, 0, 'socre:' + str(score))
-    ball_y += speedy
-    ball_x += speedx
+    ballrect.y += speedy
+    ballrect.x += speedx
+    print(ballrect.x)
 
 
-    if ball_y > 700:  #   球超过屏幕
-        ball_y = -30
-        ball_x = random.randint(20, 480)
+    if ballrect.y > 700:  #   球超过屏幕
+        ballrect.y = -30
+        ballrect.x = random.randint(20, 480)
 
-    if ball_y < 0 and speedy<0:  #   球超过屏幕
+    if ballrect.y < 0 and speedy<0:  #   球超过屏幕
         # speedx = -speedx
         speedy = -speedy
 
-    if ball_x<30or ball_x>610:   # 检查左右边缘
+    if ballrect.x<30or ballrect.x>610:   # 检查左右边缘
         speedx = -speedx
 
-    if ball_y > 650-30:              # 检查挡板是否借住
-        if ball_x > rect_x and ball_x < rect_x + 200:
+    if ballrect.y > 650-30:              # 检查挡板是否借住
+        if ballrect.x > sportrect.x and ballrect.x < sportrect.x + 200:
             speedx = -speedx
             speedy = -speedy
 
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_LEFT]:
-        rect_x -= 5
+        sportrect.x -= 5
     if keys[pygame.K_RIGHT]:
-        rect_x += 5
+        sportrect.x += 5
 
-    if rect_x > 640 - 100:
-        rect_x = 640 - 100
-    if rect_x < 0:
-        rect_x = 0
-    pygame.draw.circle(screen, (100, 40, 30), (ball_x, ball_y), 30, 0)
-    pygame.draw.rect(screen, (0, 0, 255),(rect_x, rect_y, 200, 30))  # 其中第一个元组(x, y)表示的是该矩形左上角的坐标，第二个元组 (width, height)表示的是矩形的宽度和高度。
+    if sportrect.x > 640 - 100:
+        sportrect.x = 640 - 100
+    if sportrect.x < 0:
+        sportrect.x = 0
+    screen.blit(ball, ballrect)  # 将小球画在屏幕上
+    screen.blit(sport, sportrect)  # 讲挡板画在屏幕上
 
     pygame.display.update()  # 刷新屏幕内容显示
 pygame.quit()  # 退出pygame
