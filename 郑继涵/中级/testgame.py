@@ -11,8 +11,10 @@ height = 480
 pygame.display.set_caption('BALL')
 
 ball = pygame.image.load('./img/ball.png')  # 加载图片
-# ballrect = ball.get_rect()  # 获取矩形区域
-ballrect = pygame.Rect(0, 0, 16, 16)  # pygame.Rect(left, top, width, height)
+ballrect = ball.get_rect()  # 获取矩形区域
+
+
+# ballrect = pygame.Rect(0, 0, 16, 16)  # pygame.Rect(left, top, width, height)
 
 
 speed = [1, 1]  # 设置移动的X轴、Y轴
