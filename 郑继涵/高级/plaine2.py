@@ -27,10 +27,11 @@ clock  = pygame.time.Clock()
 hero_rect = pygame.Rect(150,300,102,126)  # x  y  width height
 
 #222222222222222222222222222222222222222222222222
-#创建敌机的精灵
+#22创建敌机的精灵
 enemy = GameSprite("../../images/enemy1.png")
-# 创建敌机的精灵组
-enemy_group = pygame.sprite.Group(enemy)
+enemy1 = GameSprite("../../images/enemy1.png",2)
+# 22创建敌机的精灵组
+enemy_group = pygame.sprite.Group(enemy,enemy1)
 
 # 游戏循环 意味着游戏正式开始
 while True:
@@ -50,6 +51,11 @@ while True:
     screen.blit(bg, (0, 0))
 
     screen.blit(hero, hero_rect)
+
+    # 22 让精灵组调用两个方法
+    # update  draw
+    enemy_group.update()   # 让组中的所有精灵都更新位置
+    enemy_group.draw(screen)  # 在screen上绘制所有的精灵
 
     # 调用update方法更新显示
     pygame.display.update()
