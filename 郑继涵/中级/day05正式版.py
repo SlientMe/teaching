@@ -25,7 +25,7 @@ while True:
         ball_y -= 1
     if keys[pygame.K_LEFT]:
         ball_x -= 1
-    # if keys[pygame.K_RIGHT]:
-    #     ball_x += 1
+    if keys[pygame.K_RIGHT]:
+        ball_x += 1
     pygame.display.update()  # 刷新屏幕内容显示
 pygame.quit()  # 退出pygame

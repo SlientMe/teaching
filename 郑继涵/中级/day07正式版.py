@@ -64,16 +64,11 @@ while True:
             score += 1
         # else:
         #     lives = lives-1
-
-
-
     keys = pygame.key.get_pressed()
-
     if keys[pygame.K_LEFT]:
         rect_x -= 5
     if keys[pygame.K_RIGHT]:
         rect_x += 5
-
     if rect_x > 640 - 100:
         rect_x = 640 - 100
     if rect_x < 0:

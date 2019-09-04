@@ -13,14 +13,10 @@ sport = pygame.image.load('./img/sport.png')  # 添加挡板图片
 bg = pygame.image.load('./img/background.png')  # 加载小球图片图片
 ballrect = ball.get_rect()  # 获取矩形区域
 sportrect = sport.get_rect()
-
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
-
-
 sportrect.y = 650
-
 speed = 5
 speedx = speed
 speedy = speed
@@ -46,7 +42,6 @@ while True:
 
     print_text(screen, font1, 0, 0, 'live:' + str(lives))
     print_text(screen, font1, 500, 0, 'socre:' + str(score))
-    print(lives)
     ballrect.y += speedy
     ballrect.x += speedx
 
@@ -56,15 +51,15 @@ while True:
         ballrect.x = random.randint(20, 480)
         lives = lives - 1
 
-    if ballrect.y < 0 and speedy<0:  #   球超过屏幕
+    if ballrect.top < 0 and speedy<0:  #   球超过屏幕
         # speedx = -speedx
         speedy = -speedy
 
-    if ballrect.left<0 or ballrect.x>610:   # 检查左右边缘
+    if ballrect.left<0 or ballrect.right>640:   # 检查左右边缘
         speedx = -speedx
 
-    if ballrect.y > 650-30:              # 检查挡板是否借住
-        if ballrect.x > sportrect.x and ballrect.x < sportrect.x + 200:
+    if ballrect.y > 650-sportrect.height:              # 检查挡板是否借住
+        if ballrect.x > sportrect.x and ballrect.x < sportrect.x + sportrect.width:
             speedx = -speedx
             speedy = -speedy
             score = score+1
@@ -77,12 +72,11 @@ while True:
     if keys[pygame.K_RIGHT]:
         sportrect.x += 5
 
-    if sportrect.x > 640 - 100:
-        sportrect.x = 640 - 100
+    if sportrect.x > 640 - sportrect.width:
+        sportrect.x = 640 - sportrect.width
     if sportrect.x < 0:
         sportrect.x = 0
     screen.blit(ball, ballrect)  # 将小球画在屏幕上
     screen.blit(sport, sportrect)  # 讲挡板画在屏幕上
-
     pygame.display.update()  # 刷新屏幕内容显示
 pygame.quit()  # 退出pygame
