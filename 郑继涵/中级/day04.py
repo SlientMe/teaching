@@ -101,6 +101,34 @@ def fabonic(n):
 print(fabonic(8))
  ————————————————
 
+非递归实现：
+def Fibnacci(n):
+    result = [0,1]
+    if n <= 1:
+        return result[n]
+    for i in range(2,n+1):
+        result.append(result[i-1]+result[i-2])
+    return result[n]
+-----------------------------------------------------
+def fab(n):  
+    n1 = 1      
+    n2 = 1      
+    n3 = 1    
+
+    if n < 1:  
+        print('输入有误！')
+    
+    while (n-2) > 0:    
+        n3 = n2 + n1   #第三项为前两项和
+        n1 = n2            #计算完，整体后移，准备计算下一项  
+        n2 = n3            
+        n -= 1              
+
+    return n3            
+
+a = int(input('请输入要计算的斐波那契项数：'))
+result = fab(a)
+print('第%d项斐波那契数为%d' % (a, result))
 
 
 '''
