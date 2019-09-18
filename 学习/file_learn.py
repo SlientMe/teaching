@@ -1,2 +1,2 @@
-import os
-print(os.path.abspath('.'))
+_ = 1 << 10
+print(_)

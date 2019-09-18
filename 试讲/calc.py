@@ -54,8 +54,7 @@ btnsub = tkinter.Button(root, text='-', font=('微软雅黑', 20), fg=('#4F4F4F'
 btnsub.place(x=210, y=285, width=70, height=55)
 btnadd = tkinter.Button(root, text='+', font=('微软雅黑', 20), fg=('#4F4F4F'), bd=0.5, command=lambda: pressCompute('+'))
 btnadd.place(x=210, y=340, width=70, height=55)
-btnequ = tkinter.Button(root, text='=', bg='orange', font=('微软雅黑', 20), fg=('#4F4F4F'), bd=0.5,
-                        command=lambda: pressEqual())
+btnequ = tkinter.Button(root, text='=', bg='orange', font=('微软雅黑', 20), fg=('#4F4F4F'), bd=0.5,command=lambda: pressEqual())
 btnequ.place(x=210, y=395, width=70, height=110)
 btnper = tkinter.Button(root, text='%', font=('微软雅黑', 20), fg=('#4F4F4F'), bd=0.5, command=lambda: pressCompute('%'))
 btnper.place(x=0, y=450, width=70, height=55)
@@ -115,7 +114,8 @@ def pressEqual():
     lists.append(curnum)
 
     computrStr = ''.join(lists)  # 讲列表内容用join命令将字符串链接起来
-    endNum = eval(computrStr)  # 用eval命令运算字符串中的内容
+    endNum = eval(computrStr)  # 用eval命令运算字符串中的内容   eval() 函数用来执行一个字符串表达式，并返回表达式的值。
+
     #    a = str(endNum)
     #   b = '='+a                       #给运算结果前添加一个 ‘=’ 显示   不过这样写会有BUG 不能连续运算，这里注释，不要 =
     #   c = b[0:10]                     #所有的运算结果取9位数
