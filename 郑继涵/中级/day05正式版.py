@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+# 先画出一个球 再完成通过键盘来控制球的移动  在让球自己动起来  再做碰撞检测
+
 pygame.init()
 screen = pygame.display.set_mode((640,480))
 pygame.display.set_caption("BAll")
