@@ -1,5 +1,4 @@
-import pygame
-from 郑继涵.高级.plane_spritessss import *
+from 郑继涵.高级.飞机大战.plane_spritessss import *
 
 # 这节课主要是面向对象开发，搭建游戏的主框架
 

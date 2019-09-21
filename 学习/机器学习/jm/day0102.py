@@ -7,7 +7,7 @@ alldata = []   # 所有坐标点
 verList = []   # 垂直点
 horList = []   # 水平点
 firstPoint = [0,50000,5000]  # 起始点
-endPoint = [100000,59652.34,5022]  #终止点
+endPoint = [100000,74860.54,5499.61]  #终止点
 verden = []
 vererror = []
 horden = []
@@ -26,8 +26,18 @@ def excel_to_matrix(path):
         elif d[4]==0:
             horList.append(d)
 
-datafile = 'data1.xlsx'
+datafile = 'data2.xlsx'
 excel_to_matrix(datafile)
+
+def seconde_min(lt):
+    print(lt)
+    d={}         #设定一个空字典
+    for i, v in enumerate(lt):#利用函数enumerate列出lt的每个元素下标i和元素v
+        d[v]=i   #把v作为字典的键，v对应的值是i
+    lt.sort()    #运用sort函数对lt元素排
+    y=lt[1]      #此时lt中第二小的下标是1，求出对应的元素就是字典对应的键
+    return d[y]  #根据键找到对应值就是所找的下标
+
 
 
 def calc_pointTopoint(point1,poin2):
@@ -52,15 +62,31 @@ def checkhor(point,l):  # 检测水平方向
     d = []
     for i in horList:
         d1 = calc_pointTopoint(point,i[1:4])
-        if d1<20/0.001 and d1<20/0.001-l:  # d5<20-d3  15   15
+        if d1<15/0.001 and d1<15/0.001-l:  # d5<20-d3  15   15
             d2 = calc_pointTopoint(i[1:4],endPoint)
             meetPoint.append(d2/d1)
             meet.append(i)
             d.append(d1)
     horden.append(d[meetPoint.index(min(meetPoint))])
-    print("水平误差减去后的值%s"%(d[meetPoint.index(min(meetPoint))]+l))
-    print("水平误差减%s"%d[meetPoint.index(min(meetPoint))])
+    # print("水平误差减去后的值%s"%(d[meetPoint.index(min(meetPoint))]+l))
+    # print("水平误差减%s"%d[meetPoint.index(min(meetPoint))])
     return meet[meetPoint.index(min(meetPoint))]
+
+def checkhorSecond(point,l):  # 检测水平方向
+    meetPoint = []
+    meet = []
+    d = []
+    for i in horList:
+        d1 = calc_pointTopoint(point,i[1:4])
+        if d1<15/0.001 and d1<15/0.001-l:  # d5<20-d3  15   15
+            d2 = calc_pointTopoint(i[1:4],endPoint)
+            meetPoint.append(d2/d1)
+            meet.append(i)
+            d.append(d1)
+    horden.append(d[seconde_min(meetPoint)])
+    # print("水平误差减去后的值%s"%(d[meetPoint.index(min(meetPoint))]+l))
+    # print("水平误差减%s"%d[seconde_min(meetPoint)])
+    return meet[seconde_min(meetPoint)]
 
 
 def checkver(point,l):  # 检测垂直方向
@@ -69,18 +95,34 @@ def checkver(point,l):  # 检测垂直方向
     d = []
     for i in verList:
         d3 = calc_pointTopoint(point,i[1:4])
-        if d3<15/0.001 and d3<25/0.001-l:  # d3<=25-d1   10  20
+        if d3<10/0.001 and d3<20/0.001-l:  # d3<=25-d1   10  20
             d4 = calc_pointTopoint(i[1:4],endPoint)
             meetPoint.append(d4/d3)
             meet.append(i)
             d.append(d3)
-
     verden.append(d[meetPoint.index(min(meetPoint))])
-    print("垂直误差减去后的值%s"%(d[meetPoint.index(min(meetPoint))]+l))
-    print("垂直误差%s"%d[meetPoint.index(min(meetPoint))])
+    # print("垂直误差减去后的值%s"%(d[meetPoint.index(min(meetPoint))]+l))
+    # print("垂直误差%s"%d[meetPoint.index(min(meetPoint))])
     return meet[meetPoint.index(min(meetPoint))]
 
-
+def checkverSecond(point,l):  # 检测垂直方向
+    meetPoint = []
+    meet = []
+    d = []
+    for i in verList:
+        d3 = calc_pointTopoint(point,i[1:4])
+        if d3<10/0.001 and d3<20/0.001-l:  # d3<=25-d1   10  20
+            d4 = calc_pointTopoint(i[1:4],endPoint)
+            meetPoint.append(d4/d3)
+            meet.append(i)
+            d.append(d3)
+    verden.append(d[seconde_min(meetPoint)])
+    # print("垂直误差减去后的值%s"%(d[meetPoint.index(min(meetPoint))]+l))
+    # print("垂直误差%s"%d[meetPoint.index(min(meetPoint))])
+    return meet[seconde_min(meetPoint)]
+isFirstflag = []
+for k in range(len(alldata)):
+    isFirstflag.append(True)
 
 tracelist = []
 nextpoint = firstPoint
@@ -92,16 +134,23 @@ for k in range(len(alldata)):
         nextpoint = temp[1:4]
         tracelist.append(temp)
     elif k%2==0:
-        temp = checkhor(nextpoint,verden[m])
-        m += 1
-        nextpoint = temp[1:4]
-        tracelist.append(temp)
+        if isFirstflag[k]:
+            try:
+                temp = checkhor(nextpoint,verden[m])
+            except ValueError:
+               isFirstflag[k] = False
+               k -= 2
+               continue
+            # print(temp)
+            m += 1
+            nextpoint = temp[1:4]
+            tracelist.append(temp)
     elif k%2==1:
         temp = checkver(nextpoint,horden[n])
         n += 1
         nextpoint = temp[1:4]
         tracelist.append(temp)
-    if calc_pointTopoint(nextpoint,endPoint)<20/0.001:
+    if calc_pointTopoint(nextpoint,endPoint)<10/0.001:
         break
 
 

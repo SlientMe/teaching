@@ -1,5 +1,4 @@
-import pygame
-from 郑继涵.高级.plane_spritessss import *
+from 郑继涵.高级.飞机大战.plane_spritessss import *
 
 #这次课主要内容是碰撞检测
 

@@ -1,5 +1,4 @@
-import pygame
-from 郑继涵.高级.plane_spritessss import *
+from 郑继涵.高级.飞机大战.plane_spritessss import *
 
 #这次课主要类容是创建敌机  使用定时器创建敌机(1.设置事件id  2. 设置定时器   3. 监听事件)
 # 2英雄飞机登场   通过按键来移动飞机
