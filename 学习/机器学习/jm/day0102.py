@@ -31,12 +31,15 @@ excel_to_matrix(datafile)
 
 def seconde_min(lt):
     print(lt)
-    d={}         #设定一个空字典
-    for i, v in enumerate(lt):#利用函数enumerate列出lt的每个元素下标i和元素v
-        d[v]=i   #把v作为字典的键，v对应的值是i
-    lt.sort()    #运用sort函数对lt元素排
-    y=lt[1]      #此时lt中第二小的下标是1，求出对应的元素就是字典对应的键
-    return d[y]  #根据键找到对应值就是所找的下标
+    if len(lt)==1:
+        return 0
+    else:
+        d={}         #设定一个空字典
+        for i, v in enumerate(lt):#利用函数enumerate列出lt的每个元素下标i和元素v
+            d[v]=i   #把v作为字典的键，v对应的值是i
+        lt.sort()    #运用sort函数对lt元素排
+        y=lt[1]      #此时lt中第二小的下标是1，求出对应的元素就是字典对应的键
+        return d[y]  #根据键找到对应值就是所找的下标
 
 
 
@@ -128,7 +131,8 @@ tracelist = []
 nextpoint = firstPoint
 m = 0
 n = 0
-for k in range(len(alldata)):
+k = 0
+while k<len(alldata):
     if k == 0:
         temp = checkhor(firstPoint,0)
         nextpoint = temp[1:4]
@@ -137,21 +141,44 @@ for k in range(len(alldata)):
         if isFirstflag[k]:
             try:
                 temp = checkhor(nextpoint,verden[m])
-            except ValueError:
-               isFirstflag[k] = False
-               k -= 2
-               continue
+                m += 1
+                nextpoint = temp[1:4]
+                tracelist.append(temp)
+            except:
+                isFirstflag[k] = False
+                k = k-2
+                print(isFirstflag[k])
+                continue
             # print(temp)
+        else:
+            print("checkhorSecond")
+            temp = checkhorSecond(nextpoint,verden[m])
             m += 1
             nextpoint = temp[1:4]
             tracelist.append(temp)
+
     elif k%2==1:
-        temp = checkver(nextpoint,horden[n])
-        n += 1
-        nextpoint = temp[1:4]
-        tracelist.append(temp)
+        if isFirstflag[k]:
+            try:
+                temp = checkver(nextpoint, horden[n])
+                n += 1
+                nextpoint = temp[1:4]
+                tracelist.append(temp)
+            except:
+                isFirstflag[k] = False
+                k = k-2
+                print(isFirstflag[k])
+                continue
+            # print(temp)
+        else:
+            print("checkverSecond")
+            temp = checkverSecond(nextpoint, horden[n])
+            n += 1
+            nextpoint = temp[1:4]
+            tracelist.append(temp)
     if calc_pointTopoint(nextpoint,endPoint)<10/0.001:
         break
+    k += 1
 
 
 newtracelist = []
