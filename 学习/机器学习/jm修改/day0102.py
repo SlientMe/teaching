@@ -28,6 +28,10 @@ def excel_to_matrix(path):
 
 datafile = 'data2.xlsx'
 excel_to_matrix(datafile)
+print(len(alldata))
+print('开车了开车了开车了开车了开车了开车了开车了开车了开车了开车了开车了开车了开车了开车了开车了开车了开车了开车了开车了')
+print("verList---111111111111111-----%s" % len(verList))
+print("horList----1111111111111111111----%s" %horList)
 
 def calc_pointTopoint(point1,poin2):
     dentence = 0
@@ -62,6 +66,8 @@ tempnextdent = 0
 truenextdent = 0
 m = 0
 while True:
+    forward = calc_pointTopoint(nextpoint,endPoint)
+
     if m==0:   # 水平
         houxuan = checkhor(nextpoint,0)
         print(houxuan)
@@ -69,15 +75,18 @@ while True:
         for i in houxuan:
             tempkey.append(i)
         tempkey.sort()
-        for j in tempkey:
+        print(tempkey)
+        for j in tempkey:   # j= d2/d1
             tempnextpoint = houxuan[j][0][1:4]
-            tempnextdent = houxuan[j][1]
-            if len(checkver(tempnextpoint,tempnextdent))>0:
+            tempnextdent = houxuan[j][1]   # d1
+            if len(checkver(tempnextpoint,tempnextdent))>0 and (forward-tempnextdent*j)>0:
                 nextpoint = tempnextpoint
                 truenextdent = tempnextdent
                 tracelist.append(nextpoint)
                 horden.append(truenextdent)
-                print("0tracelist+++++++%s"%tracelist)
+                for p in horList:
+                    if calc_pointTopoint(p,firstPoint)<20/0.001:
+                        horList.remove(p)
                 m += 1
                 break
     elif m%2 == 1: # 垂直
@@ -89,17 +98,25 @@ while True:
         print("11111111111")
         for j in tempkey:
             tempnextpoint = houxuan[j][0][1:4]
-            tempnextdent = houxuan[j][1]
-            if len(checkhor(tempnextpoint, tempnextdent)) > 0:
+            tempnextdent = houxuan[j][1]                # d1
+            if len(checkhor(tempnextpoint, tempnextdent)) > 0 and (forward-tempnextdent*j)>0:
+                # for p in verList:
+                #     if calc_pointTopoint(p,nextpoint)<15/0.001:
+                #         verList.remove(p)
+                # deletepoint = []
+                # for q in horList:
+                #     if q[1]==nextpoint[0] and q[2]==nextpoint[1] and q[3]==nextpoint[2]:
+                #         deletepoint = q
+                #         break
+                # horList.remove(deletepoint)
                 nextpoint = tempnextpoint
                 truenextdent = tempnextdent
                 tracelist.append(nextpoint)
                 verden.append(truenextdent)
-                print("111111111tracelist+++++++%s"%tracelist)
-
                 m += 1
                 break
     elif m%2 == 0: # 水平
+        print(m)
         houxuan = checkhor(nextpoint,truenextdent)
         tempkey = []
         for i in houxuan:
@@ -109,21 +126,30 @@ while True:
         for j in tempkey:
             tempnextpoint = houxuan[j][0][1:4]
             tempnextdent = houxuan[j][1]
-            if len(checkver(tempnextpoint, tempnextdent)) > 0:
+            if len(checkver(tempnextpoint, tempnextdent)) > 0 and (forward-tempnextdent*j)>0:
+                # for p in horList:
+                #     if calc_pointTopoint(p,nextpoint)<20/0.001:
+                #         horList.remove(p)
+                # deletepoint = []
+                # for q in verList:
+                #     if q[1]==nextpoint[0] and q[2]==nextpoint[1] and q[3]==nextpoint[2]:
+                #         deletepoint = q
+                #         break
+                # verList.remove(deletepoint)
                 nextpoint = tempnextpoint
                 truenextdent = tempnextdent
                 tracelist.append(nextpoint)
                 horden.append(truenextdent)
-                print("00000000000000tracelist+++++++%s"%tracelist)
-
                 m += 1
                 break
-    if calc_pointTopoint(nextpoint,endPoint)<30/0.001:
+    print("calc_pointTopoint(nextpoint,endPoint)--%s"%calc_pointTopoint(nextpoint,endPoint))
+    if calc_pointTopoint(nextpoint,endPoint)<15/0.001:
         break
 tracelist.insert(0,firstPoint)
 tracelist.append(endPoint)
 print(len(tracelist))
 print(tracelist)
+
 
 
 
