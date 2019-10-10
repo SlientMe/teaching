@@ -33,7 +33,6 @@ f.close()
 
 #读取
 f = open('code.txt','r',encoding='utf-8')
-
 # 读一行
 content = f.readline()
 print(content)
@@ -53,6 +52,11 @@ print "末尾是否强制加空格 : ", fo.softspace
 
 ''''
 除了使用文件对象的 `read`方法读取文件之外，还可以使用 'for - in `循环逐行读取或者用`readlines`方法将文件按行读取到一个列表容器中，代码如下所示。
+
+这种f=open的方式在打开文件之后一定要close()，不然这个文件一直会在后台运行，
+windows下使用ctrl+alt+del下是可以看到这个进程的，如果总觉得自己会忘记close()，可以使用with as方法，上面的句子可以这么写：
+with open("e:/PythonAAA/A/123.txt") as f:
+f.write("我爱北京天安门")
 
 import time
 def main():
