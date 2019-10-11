@@ -53,7 +53,6 @@ else:
 with open('test.txt','r',encoding='utf-8') as f:
     f.readline()
     print(f.readline())
-f.close()
 
 '''
 seek() 方法语法如下：
