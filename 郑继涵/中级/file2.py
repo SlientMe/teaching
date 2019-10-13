@@ -1,5 +1,9 @@
 ''''
 
+import shutil
+# shutil.move()
+shutil.copy2("test.txt","me.txt")
+
 什么是异常？
 异常即是一个事件，该事件会在程序执行过程中发生，影响了程序的正常执行。
 一般情况下，在Python无法正常处理程序时就会发生一个异常。
@@ -55,6 +59,20 @@ with open('test.txt','r',encoding='utf-8') as f:
     print(f.readline())
 
 '''
+复制文件并打开
+f1 = open("test.txt","r")
+f2 = open("test1.txt","a+")
+for i in f1:
+    f2.write(i)
+f2.seek(0)
+print(f2.read())
+
+f1.close()
+f2.close()
+'''
+
+'''
+print(f.tell())    返回当前文件指针的位置
 seek() 方法语法如下：
 fileObject.seek(offset[, whence])
 offset -- 开始的偏移量，也就是代表需要移动偏移的字节数
