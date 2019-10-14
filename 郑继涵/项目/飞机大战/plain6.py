@@ -1,6 +1,6 @@
-from 郑继涵.高级.飞机大战.plane_spritessss import *
+from 郑继涵.项目.飞机大战.plane_spritessss import *
 
-#这次课主要内容是碰撞检测
+#这次课主要内容是发射子弹（设置定时器常量  初始化方法中设置定时间事件  在循环中监听事件）
 
 # 常量  -- 不可变化的量
 # 变量 ---可变的量
@@ -66,16 +66,7 @@ class PlainGame(object):
 
     # 碰撞检测
     def __check_collide(self):
-        # 1.子弹摧毁敌机
-        pygame.sprite.groupcollide(self.hero.bullets,self.enemy_group,True,True)
-        # 2.敌机摧毁英雄  判断某个精灵和指定的精灵组中的精灵的碰撞
-        # pygame.sprite.spritecollide(self.hero,self.enemy_group,True)   #这是摧毁敌机
-        enemies = pygame.sprite.spritecollide(self.hero,self.enemy_group,True)
-        # 判断列表是否有类容
-        if len(enemies)>0:
-            self.hero.kill()
-            PlainGame.__game_over()
-
+        pass
     # 创建精灵
     def __creat_sprints(self):
         # 创建背景精灵和背景精灵组

@@ -1,7 +1,6 @@
-from 郑继涵.高级.飞机大战.plane_spritessss import *
+from 郑继涵.项目.飞机大战.plane_spritessss import *
 
-#这次课主要类容是创建敌机  使用定时器创建敌机(1.设置事件id  2. 设置定时器   3. 监听事件)
-# 2英雄飞机登场   通过按键来移动飞机
+#这次课主要内容是碰撞检测
 
 # 常量  -- 不可变化的量
 # 变量 ---可变的量
@@ -21,6 +20,9 @@ class PlainGame(object):
 
         # 设置定时器事件  敌机出现  1s
         pygame.time.set_timer(CREAT_ENEMY,1000)
+
+        # 设置定时器事件  发射子弹  0.5s
+        pygame.time.set_timer(HERO_FIRE,500)
 
 
     def start_game(self):
@@ -48,6 +50,8 @@ class PlainGame(object):
                 enemy = Enemy()
                 # 将敌机的精灵添加到敌机精灵组
                 self.enemy_group.add(enemy)
+            elif event.type == HERO_FIRE:
+                self.hero.fire()
             # elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             #     print("向右移动...")
         # 使用键盘提供的方法获取键盘事件 ---返会的是元组
@@ -62,7 +66,16 @@ class PlainGame(object):
 
     # 碰撞检测
     def __check_collide(self):
-        pass
+        # 1.子弹摧毁敌机
+        pygame.sprite.groupcollide(self.hero.bullets,self.enemy_group,True,True)
+        # 2.敌机摧毁英雄  判断某个精灵和指定的精灵组中的精灵的碰撞
+        # pygame.sprite.spritecollide(self.hero,self.enemy_group,True)   #这是摧毁敌机
+        enemies = pygame.sprite.spritecollide(self.hero,self.enemy_group,True)
+        # 判断列表是否有类容
+        if len(enemies)>0:
+            self.hero.kill()
+            PlainGame.__game_over()
+
     # 创建精灵
     def __creat_sprints(self):
         # 创建背景精灵和背景精灵组
@@ -80,6 +93,7 @@ class PlainGame(object):
         self.hero = Hero()
         self.hero_group = pygame.sprite.Group(self.hero)
 
+
     # 更新精灵
     def __update_sprites(self):
         self.back_group.update()
@@ -92,6 +106,10 @@ class PlainGame(object):
         # 更新英雄
         self.hero_group.update()
         self.hero_group.draw(self.screen)
+
+        #更新子弹
+        self.hero.bullets.update()
+        self.hero.bullets.draw(self.screen)
 
     @staticmethod   # 没有使用类属性和对象的属性
     def __game_over():

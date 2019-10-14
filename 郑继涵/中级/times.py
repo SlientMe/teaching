@@ -35,6 +35,15 @@ print(time.strftime("%m-%d"))
 #
 # time.sleep(secs)
 # 推迟调用线程的运行，secs的单位是秒
+'''
+import time
+print(time.time())
+days = 365
+for i in range(days):
+    print("#",end="",flush=True)
+    print('\r',"进度：{0}%".format(round((i+1)*100/days)),end="",flush=True)
+    time.sleep(0.1)
+'''
 
 #  datatime
 
@@ -58,7 +67,6 @@ perf_counter()会包含sleep()休眠时间，适用测量短持续时间
 
 
 
-import datetime
 import time
 # sum =1
 # for j in range(1,200):
