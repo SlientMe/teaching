@@ -1,4 +1,3 @@
-
 import turtle
 
 color = input("请输入颜色")  # "#000000"  十六进制

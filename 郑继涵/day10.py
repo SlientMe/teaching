@@ -10,9 +10,7 @@
 
 1. 生成任意多个随机数，并升序排列
 
-
 import random
-
 s = []
 for i in range(int(input())):
     s.append(random.randint(1, 1000))
