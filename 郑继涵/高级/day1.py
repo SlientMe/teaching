@@ -13,12 +13,58 @@
 在Python中可以使用`class`关键字定义类，然后在类中通过之前学习过的函数来
 定义方法，这样就可以将对象的动态特征描述出来，
 
-类(Class): 用来描述具有相同的属性和方法的对象的集合。它定义了该集合中每个对象所共有的属性和方法。对象是类的实例。
+面向对象编程——Object Oriented Programming，简称OOP，是一种程序设计思想。
+OOP把对象作为程序的基本单元，一个对象包含了数据和操作数据的函数。
 
+面向过程的程序设计把计算机程序视为一系列的命令集合，即一组函数的顺序执行
+。为了简化程序设计，面向过程把函数继续切分为子函数，即把大块函数通过切割成小
+块函数来降低系统的复杂度。
+
+而面向对象的程序设计把计算机程序视为一组对象的集合，而每个对象都可以接收其他对象发过来的消息，
+并处理这些消息，计算机程序的执行就是一系列消息在各个对象之间传递。
+
+在Python中，所有数据类型都可以视为对象，当然也可以自定义对象。自定义的对象数据类型就
+是面向对象中的类（Class）的概念。
 '''
 
+'''
+假设我们要处理学生的成绩表，为了表示一个学生的成绩，面向过程的程序可以用一个dict表示：
+
+std1 = { 'name': 'Michael', 'score': 98 }
+std2 = { 'name': 'Bob', 'score': 81 }
+而处理学生成绩可以通过函数实现，比如打印学生的成绩：
+
+def print_score(std):
+    print('%s: %s' % (std['name'], std['score']))
+    
+如果采用面向对象的程序设计思想，我们首选思考的不是程序的执行流程，而是Student这种数据类型应该被视为一个对象
+，这个对象拥有name和score这两个属性（Property）。如果要打印一个学生的成绩，首先必须创建出这个学生对应的对象，
+然后，给对象发一个print_score消息，让对象自己把自己的数据打印出来。
+
+类名通常是大写开头的单词
 class Student(object):
-    # 类有一个名为_init__()的特殊方法（构造方法）
+
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+    def print_score(self):
+        print('%s: %s' % (self.name, self.score))
+        
+给对象发消息实际上就是调用对象对应的关联函数，我们称之为对象的方法（Method）。面向对象的程序写出来就像这样：
+同样的，方法可以直接在实例变量上调用，不需要知道内部实现细节：
+
+
+bart = Student('Bart Simpson', 59)
+lisa = Student('Lisa Simpson', 87)
+bart.print_score()
+lisa.print_score()
+'''
+
+
+
+class Student(object):
+
     # __init__是一个特殊方法用于在创建对象时进行初始化操作
     # 通过这个方法我们可以为学生对象绑定name和age两个属性
     def __init__(self, name, age):
@@ -36,7 +82,6 @@ class Student(object):
         else:
             print('%s正在观看岛国爱情大电影.' % self.name)
 
-# self代表类的实例，而非类
 # 写在类中的函数，我们通常称之为（对象的）方法，这些方法就是对象可以
 # 接收的消息。
 
