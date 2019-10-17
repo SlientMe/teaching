@@ -55,14 +55,6 @@ class Calc:
         self.operationList.append(self.num.get())
         # 开始计算
         result = eval(''.join(self.operationList))
-        #官方文档中的解释：   将字符串str当成有效的表达式子来求值并返回计算结果。
-        '''  join 的用法
-        ss = ("qw", "er", "fg")
-        dd = ''.join(ss)
-        gg = '&'.join(ss)
-        print(dd)
-        print(gg)
-        '''
         self.num.set(result)
 
     # 全部清空重新计算方法

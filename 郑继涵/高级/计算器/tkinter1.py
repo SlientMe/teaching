@@ -25,6 +25,18 @@ anchor	控制文本（或图像）在Label中显示位置
 n,ne,e,se,s,sw,w,nw,或center来定位（ewsn代表东西南北，上北下南左西右东）
 textvariable	Label显示Tkinter变量（通常是一个StringVar变量）的内容
 最后用place()来设置位置和大小。
+
+place()详解
+from tkinter import *
+root = Tk()
+lb = Label(root,text = 'hello Place')
+# lb.place(relx = 1,rely = 0.5,anchor = CENTER)
+# 使用相对坐标(0.5,0.5)将Label放置到(0.5*sx,0.5.sy)位置上
+bt1 = Button(root, text='hello Place Button', fg='red')
+# 在Label中创建一个Button
+bt1.place(in_=lb, anchor=W)
+lb.place(relx =0.5,rely = 0.5,anchor = CENTER)
+root.mainloop()
 '''
 #
 # # 第5步，放置标签
