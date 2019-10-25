@@ -28,6 +28,7 @@ def hit_me(test):
 
 
 b = tk.Button(window, text='hi', font=('Arial', 12), width=10, height=1, command=lambda:hit_me(1))
-b.place(relx = 0,rely = 0.2,relwidth = 1.0)
+# b.place(relx = 0,rely = 0.2,relwidth = 1.0)
+b.grid(row=1, column=1)
 
 window.mainloop()
