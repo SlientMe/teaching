@@ -8,7 +8,7 @@ url = "https://movie.douban.com/cinema/nowplaying/xian/"
 response = requests.get(url=url)
 content = response.text
 # 分析页面，获取ID和电影名称
-soup = BeautifulSoup(content, 'html.parser')
+soup = BeautifulSoup(content, features='html.parser')
 # 找到所有的电影信息对应的LI标签
 movie_list = soup.find_all('li', class_='list-item')
 # movie_list是一个可迭代对象
