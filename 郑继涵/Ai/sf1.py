@@ -1,4 +1,4 @@
-# KNN
+# KNN  主要解决分类问题，也可以解决回归问题
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import datasets

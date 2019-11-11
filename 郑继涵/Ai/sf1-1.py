@@ -37,10 +37,21 @@ plt.show()
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from  sklearn.preprocessing import StandardScaler
+from  sklearn.neighbors import KNeighborsClassifier
 iris = datasets.load_iris()
 x = iris.data
 y= iris.target
 x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=666)
 stander = StandardScaler()
-stander.fit(x_train)
-print(stander.mean_)  # 现在stader就保持了x_train中的关键信息
+stander.fit(x_train) # 现在stader就保持了x_train中的关键信息
+print(stander.mean_)
+print(stander.scale_)
+x_train = stander.transform(x_train) # 其实stander.transform(x_train)没有改变xtrain
+x_test_standard = stander.transform(x_test)
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(x_train,y_train)
+print(knn.score(x_test_standard,y_test))
+
+
+
+
