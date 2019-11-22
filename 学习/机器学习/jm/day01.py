@@ -128,7 +128,7 @@ print(newtracelist)
 print(horden)
 print(verden)
 
-
+print(newtracelist)
 page = Page()# st
 data = newtracelist
 range_color = ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf',
