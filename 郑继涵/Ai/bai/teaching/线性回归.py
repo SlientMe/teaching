@@ -1,71 +1,91 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn import datasets
+
+
+# 加载数据
+iris = datasets.load_iris()  # 可以看成字典
+# # 先用key方法查看数据集
+# print(boston.keys())
+# #这里的data有13个维度，506个样本，target就是我们要预测的房价，接下来再查看feature_names
+# print(boston.feature_names)
+# print(boston.DESCR)
+print(iris.keys())
+print(iris.data)  # 拿到数据
+print(iris.data.shape)
+x = iris.data[:,:2]  # 只能绘制2维图像，所以只要前两列
+plt.scatter(x[:,0],x[:,1])
+plt.show()
+
 
 # https://blog.csdn.net/jiaoyangdetian/article/details/89326342
-class SimpleRegress(object):
-    def __init__(self, x_data, y_data):
-        self.x_data = x_data
-        self.y_data = y_data
-        self.b0 = 0
-        self.b1 = 1
+# 线性回归算法  主要解决回归问题
+import numpy as np
+import matplotlib.pyplot as plt
 
-        return
+x = np.array([1.,2.,3.,4.,5.])
+y = np.array([1.,3.,2.,3.,5.])
 
-    def calculate_work(self):  # 回归方程中b0、b1的求解
+plt.scatter(x,y)
+plt.axis([0,6,0,6])
+plt.show()
+# a = ()/()   b= y-ax 具体公式可以网上找出
+x_mean = np.mean(x)
+y_mean = np.mean(y)
 
-        x_mean = np.mean(self.x_data)  # x_mean= 14.0
-        y_mean = np.mean(self.y_data)  # y_mean= 130.0
-        x1 = self.x_data - x_mean  # x1= [-12.  -8.  -6.  -6.  -2.   2.   6.   6.   8.  12.]
-        y1 = self.y_data - y_mean  # y1= [-72. -25. -42. -12. -13.   7.  27.  39.  19.  72.]
-        s = x1 * y1  # s= [864. 200. 252.  72.  26.  14. 162. 234. 152. 864.]
-        u = x1 * x1  # u= [144.  64.  36.  36.   4.   4.  36.  36.  64. 144.]
-        self.b1 = np.sum(s) / np.sum(u)  # b1= 5.0
-        self.b0 = y_mean - self.b1 * x_mean  # b0= 60.0
+num = 0.0  # 分子
+d = 0.0  # 分母
+for x_i,y_i in zip(x,y):
+    num += (x_i-x_mean)*(y_i-y_mean)
+    d += (x_i-x_mean)**2
+a = num/d
+b = y_mean - a*x_mean
 
-        return
-
-    def test_data_work(self, text_data):  # 回归方程的建立与数值预测
-
-        result = list([])
-        for one_test in text_data:
-            y = self.b0 + self.b1 * one_test
-            result.append(y)
-        return result
-
-    def root_data_view(self):  # 绘制源数据可视化图
-        plt.scatter(x_data, y_data, label='simple regress', color='k', s=5)  # s 点的大小
-        plt.xlabel('x')
-        plt.ylabel('y')
-        plt.legend()
-        plt.show()
-        return
-
-    def test_data_view(self):  # 绘制回归线
-        # 绘制回归线两个点的数据
-        x_min = np.min(self.x_data)
-        x_max = np.max(self.x_data)
-        y_min = np.min(self.y_data)
-        y_max = np.max(self.y_data)
-        x_plot = list([x_min, x_max])
-        y_plot = list([y_min, y_max])
-        # 绘制
-        plt.scatter(x_data, y_data, label='root data', color='k', s=5)  # s 点的大小
-        plt.plot(x_plot, y_plot, label='regression line')
-        plt.xlabel('x')
-        plt.ylabel('y')
-        plt.legend()
-        plt.title('simple linear regression')
-        plt.show()
-        return
+y_hat = a*x +b
+plt.scatter(x,y)
+plt.plot(x,y_hat,color="red")
+plt.axis([0,6,0,6])
+plt.show()
 
 
-x_data = np.array([2, 6, 8, 8, 12, 16, 20, 20, 22, 26])
-y_data = np.array([58, 105, 88, 118, 117, 137, 157, 169, 149, 202])
-test_data = np.array([16])
+# 多元线性回归
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.linear_model import LinearRegression
 
-sr = SimpleRegress(x_data, y_data)
-sr.calculate_work()
-result = sr.test_data_work(test_data)  # result= [140.0]
-print(result)
-sr.root_data_view()
-sr.test_data_view()
+'''
+https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression
+使用场景：一般来说，只要我们觉得数据有线性关系，LinearRegression类是我们的首先。如果发现拟合或者预测的不好，再考虑用其他的线性回归库。
+'''
+fig = plt.figure()
+plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
+plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
+ax = Axes3D(fig)
+
+# 构造X数据
+X = np.random.randint(0, 7, (20, 2))
+# 构造y数据， y = 1 * x_0 + 2 * x_1 + 3，后面打印参数会发现，是一致的
+y = np.dot(X, np.array([1, 2])) + 3
+# 绘制原始数据
+ax.scatter(X[:, 0], X[:, 1], y, marker='o')
+
+# 参数打印
+reg = LinearRegression().fit(X, y)
+print('分数：', reg.score(X, y))
+print('参数：', reg.coef_)
+print('截距：', reg.intercept_)
+
+# 测试数据生成
+test_x0 = np.linspace(0, 5, 10)
+test_x1 = np.linspace(0, 5, 10)
+test_X = np.array([test_x0, test_x1]).T
+
+pred_y = reg.predict(test_X)
+print('预测：', pred_y)
+
+# 生成预测图形
+ax.plot(test_X[:, 0], test_X[:, 1], pred_y, c='r')
+plt.show()
+
+

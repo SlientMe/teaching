@@ -179,6 +179,12 @@ print(np.var([1,2,3,4]))
 a = np.array([[3,7],[9,1]])
 print(np.sort(a[:,1], axis =  0))
 
+print(np.random.randint(1,100,size=100))
+
+T = np.random.normal(0,1,size=100000)
+print(np.mean(T))
+print(np.std(T))
+
 
 
 
