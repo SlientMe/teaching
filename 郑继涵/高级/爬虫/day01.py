@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import lxml
 import requests
 
+# 好的网站  http://www.jsphp.net/python/show-24-214-1.html
+
 html = """
 <html><head><title>The Dormouse's story</title></head>
 <body>

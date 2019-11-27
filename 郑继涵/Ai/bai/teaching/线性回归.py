@@ -47,6 +47,30 @@ plt.plot(x,y_hat,color="red")
 plt.axis([0,6,0,6])
 plt.show()
 
+# sklearn实现简单线性回归
+
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+# 加载数据，波士顿房价
+boston = datasets.load_boston()
+x, y = boston.data, boston.target
+
+# 划分训练集和检验集
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random_state=10010)
+
+# 使用训练集训练模型
+reg = LinearRegression()
+reg.fit(x_train, y_train)
+
+# 使用模型进行预测
+y_predict = reg.predict(x_test)
+
+# 计算模型的预测值与真实值之间的均方误差MSE
+print(mean_squared_error(y_test, y_predict))
+
 
 # 多元线性回归
 import numpy as np

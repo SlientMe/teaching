@@ -1,103 +1,173 @@
-from tkinter import *
-class Calc():
+import tkinter
+
+
+# 定义计算器类
+class Calc:
+    # 初始化魔术方法
     def __init__(self):
-        print("我出来了")
-        global tk
-        tk = Tk()  # 注意不能用self = Tk(),相当于将子类重新赋值了
-        tk.geometry('480x500')
-        tk.title('计算器')
+        # 初始化共用属性
+        # 定义一个用于存放被计算字符串的列表
+        self.operationList = []
+        # 定义运算标记 确定是否输入了运算符号
+        self.isOper = False
+        # 初始化界面
+        self.initWindows()
 
-        self.sv = StringVar()
-        self.sv.set('初始状态')
-        show_label = Label(tk, textvariable=self.sv, bg='#eeeeee', width=34, height=4,
-                           font=('黑体', 18, 'bold',), justify=LEFT, anchor='e')
-        show_label.pack(padx=10, pady=10)
+    # 更改按键盘颜色方法
+    def changeBg(self, evt):
+        evt.widget['bg'] = 'cyan'
 
-        k_area = Frame(width=600, height=450, bg='#cccccc')
-        k_area.pack()
+    # 恢复按键盘颜色方法
+    def backBg(self, evt):
+        evt.widget['bg'] = 'lightgray'
 
-        w = 5
-        h = 1
-        key_1 = Button(k_area, text='1', width=w, height=h,
-                       bg='yellow', font=('黑体', 30, 'bold'))
-        key_1.grid(row=1, column=0)
 
-        key_2 = Button(k_area, text='2', width=w, height=h,
-                       bg='yellow', font=('黑体', 30, 'bold'))
-        key_2.grid(row=1, column=1)
+    # 界面布局方法
+    def initWindows(self):
+        # 生成主窗口 定制窗口尺寸
+        root = tkinter.Tk()
+        root.geometry("400x500")
+        root.title('计算器')
+        # 生成用于保存数值的变量
+        self.num = tkinter.StringVar()
+        self.num.set(0)
 
-        key_3 = Button(k_area, text='3', width=w, height=h,
-                       bg='yellow', font=('黑体', 30, 'bold'))
-        key_3.grid(row=1, column=2)
+        # 运算结果输出位置
+        result = tkinter.Label(root, width=20, height=2, bg='white', bd=10, anchor='e', font=('宋体', 50),
+                               textvariable=self.num)
 
-        key_4 = Button(k_area, text='4', width=w, height=h,
-                       bg='yellow', font=('黑体', 30, 'bold'))
-        key_4.grid(row=2, column=0)
+        result.place(relx=0, rely=0, relwidth=1.0, relheight=0.4)
+        # result.pack()
 
-        key_5 = Button(k_area, text='5', width=w, height=h,
-                       bg='yellow', font=('黑体', 30, 'bold'))
-        key_5.grid(row=2, column=1)
+        ###########################以下为按键部分############################
+        buttonCE = tkinter.Button(root, text='CE', bg='lightgray')
+        buttonCE.place(relx=0, rely=0.4, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        buttonCE.bind('<Enter>', self.changeBg)
+        buttonCE.bind('<Leave>', self.backBg)
 
-        key_6 = Button(k_area, text='6', width=w, height=h,
-                       bg='yellow', font=('黑体', 30, 'bold'))
-        key_6.grid(row=2, column=2)
+        buttonC = tkinter.Button(root, text='C', bg='lightgray')
+        buttonC.place(relx=0.25, rely=0.4, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        buttonC.bind('<Enter>', self.changeBg)
+        buttonC.bind('<Leave>', self.backBg)
 
-        key_7 = Button(k_area, text='7', width=w, height=h,
-                       bg='yellow', font=('黑体', 30, 'bold'))
-        key_7.grid(row=3, column=0)
+        buttonDel = tkinter.Button(root, text='<-', bg='lightgray')
+        buttonDel.place(relx=0.5, rely=0.4, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        buttonDel.bind('<Enter>', self.changeBg)
+        buttonDel.bind('<Leave>', self.backBg)
 
-        key_8 = Button(k_area, text='8', width=w, height=h,
-                       bg='yellow', font=('黑体', 30, 'bold'))
-        key_8.grid(row=3, column=1)
+        buttonDiv = tkinter.Button(root, text='÷', bg='lightgray')
+        buttonDiv.place(relx=0.75, rely=0.4, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        buttonDiv.bind('<Enter>', self.changeBg)
+        buttonDiv.bind('<Leave>', self.backBg)
 
-        key_9 = Button(k_area, text='9', width=w, height=h,
-                       bg='yellow', font=('黑体', 30, 'bold'))
-        key_9.grid(row=3, column=2)
+        button1 = tkinter.Button(root, text='1', bg='lightgray')
+        button1.place(relx=0, rely=0.5, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        button1.bind('<Enter>', self.changeBg)
+        button1.bind('<Leave>', self.backBg)
 
-        key_0 = Button(k_area, text='0', width=w, height=h,
-                       bg='yellow', font=('黑体', 30, 'bold'))
-        key_0.grid(row=4, column=1)
+        button2 = tkinter.Button(root, text='2', bg='lightgray')
+        button2.place(relx=0.25, rely=0.5, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        button2.bind('<Enter>', self.changeBg)
+        button2.bind('<Leave>', self.backBg)
 
-        key_point = Button(k_area, text='.', width=w, height=h,
-                           bg='yellow', font=('黑体', 30, 'bold'))
-        key_point.grid(row=4, column=2)
+        button3 = tkinter.Button(root, text='3', bg='lightgray')
+        button3.place(relx=0.5, rely=0.5, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        button3.bind('<Enter>', self.changeBg)
+        button3.bind('<Leave>', self.backBg)
 
-        key_pms = Button(k_area, text='±', width=w, height=h,
-                         bg='yellow', font=('黑体', 30, 'bold'))
-        key_pms.grid(row=3, column=3)
+        buttonX = tkinter.Button(root, text='x', bg='lightgray')
+        buttonX.place(relx=0.75, rely=0.5, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        buttonX.bind('<Enter>', self.changeBg)
+        buttonX.bind('<Leave>', self.backBg)
 
-        key_close = Button(k_area, text='Close', width=w, height=h, bg='red',
-                           font=('黑体', 30, 'bold'))
-        key_close.grid(row=4, column=0)
+        button4 = tkinter.Button(root, text='4', bg='lightgray',)
+        button4.place(relx=0, rely=0.6, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        button4.bind('<Enter>', self.changeBg)
+        button4.bind('<Leave>', self.backBg)
 
-        key_plus = Button(k_area, text='+', width=w, height=h,
-                          bg='yellow', font=('黑体', 30, 'bold'))
-        key_plus.grid(row=1, column=3)
+        button5 = tkinter.Button(root, text='5', bg='lightgray')
+        button5.place(relx=0.25, rely=0.6, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        button5.bind('<Enter>', self.changeBg)
+        button5.bind('<Leave>', self.backBg)
 
-        key_minus = Button(k_area, text='-', width=w,
-                           bg='yellow', font=('黑体', 30, 'bold'))
-        key_minus.grid(row=2, column=3)
+        button6 = tkinter.Button(root, text='6', bg='lightgray')
+        button6.place(relx=0.5, rely=0.6, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        button6.bind('<Enter>', self.changeBg)
+        button6.bind('<Leave>', self.backBg)
 
-        key_multiply = Button(k_area, text='x', width=w, height=h,
-                              bg='yellow', font=('黑体', 30, 'bold'))
-        key_multiply.grid(row=0, column=2)
+        button_ = tkinter.Button(root, text='-', bg='lightgray')
+        button_.place(relx=0.75, rely=0.6, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        button_.bind('<Enter>', self.changeBg)
+        button_.bind('<Leave>', self.backBg)
 
-        key_divide = Button(k_area, text='÷', width=w, height=h,
-                            bg='yellow', font=('黑体', 30, 'bold'))
-        key_divide.grid(row=0, column=1)
+        button7 = tkinter.Button(root, text='7', bg='lightgray')
+        button7.place(relx=0, rely=0.7, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        button7.bind('<Enter>', self.changeBg)
+        button7.bind('<Leave>', self.backBg)
 
-        key_equal = Button(k_area, text='=', width=w, height=h,
-                           bg='yellow', font=('黑体', 30, 'bold'))
-        key_equal.grid(row=4, column=3)
+        button8 = tkinter.Button(root, text='8', bg='lightgray')
+        button8.place(relx=0.25, rely=0.7, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        button8.bind('<Enter>', self.changeBg)
+        button8.bind('<Leave>', self.backBg)
 
-        key_c = Button(k_area, text='Clear', width=w, height=h,
-                       bg='yellow', font=('黑体', 30, 'bold'))
-        key_c.grid(row=0, column=0)
+        button9 = tkinter.Button(root, text='9', bg='lightgray')
+        button9.place(relx=0.5, rely=0.7, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        button9.bind('<Enter>', self.changeBg)
+        button9.bind('<Leave>', self.backBg)
 
-        key_del = Button(k_area, text='←', width=w, height=h,
-                         bg='yellow', font=('黑体', 30, 'bold'))
-        key_del.grid(row=0, column=3)
+        buttonAdd = tkinter.Button(root, text='+', bg='lightgray')
+        buttonAdd.place(relx=0.75, rely=0.7, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        buttonAdd.bind('<Enter>', self.changeBg)
+        buttonAdd.bind('<Leave>', self.backBg)
 
-        tk.mainloop()
+        buttonFlag = tkinter.Button(root, text='±', bg='lightgray')
+        buttonFlag.place(relx=0, rely=0.8, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        buttonFlag.bind('<Enter>', self.changeBg)
+        buttonFlag.bind('<Leave>', self.backBg)
 
+        button0 = tkinter.Button(root, text='0', bg='lightgray')
+        button0.place(relx=0.25, rely=0.8, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        button0.bind('<Enter>', self.changeBg)
+        button0.bind('<Leave>', self.backBg)
+
+        buttonPoint = tkinter.Button(root, text='.', bg='lightgray')
+        buttonPoint.place(relx=0.5, rely=0.8, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        buttonPoint.bind('<Enter>', self.changeBg)
+        buttonPoint.bind('<Leave>', self.backBg)
+
+        buttonEque = tkinter.Button(root, text='=', bg='lightgray')
+        buttonEque.place(relx=0.75, rely=0.8, relwidth=0.25, relheight=0.1)
+        # 绑定按钮 生成鼠标经过变色效果
+        buttonEque.bind('<Enter>', self.changeBg)
+        buttonEque.bind('<Leave>', self.backBg)
+        #########################以上为按键部分############################
+        # # 底部显示信息
+        # bottomLabel = tkinter.Label(root, text='Power By Microhard Corpration\n@2017'
+        #                             , bg='cyan', width=30, height=1, padx=0)
+        # bottomLabel.place(relx=0, rely=0.9, relwidth=1.0, relheight=0.1)
+
+        # 主窗口循环
+        root.mainloop()
+
+
+# 实例化计算器对象
 c = Calc()
