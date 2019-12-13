@@ -45,10 +45,16 @@ plt.show()
 print(log_reg.score(x_train,y_train)) # 简单的线性回归，正确率不是很高
 print(log_reg.score(x_test,y_test))
 
+# https://www.cnblogs.com/volcao/p/9385930.html
 # 使用sklearn使用多项式逻辑回归
+# 使用管道:Pipeline(list)，list 内的每一个元素为为管道的一步，每一步是一个元组，
+        # 元组的第一个元素是一个字符串，是一个实例对象，描述这一步的内容或功能，第二个元素是一个类的对象
+
 def PolynomialLogisticRegression(degree):
     return Pipeline([
+        # 管道第一步：给样本特征添加多形式项；
         ('poly',PolynomialFeatures(degree=degree)),
+        # 管道第二步：数据归一化处理；
         ('std_scaler',StandardScaler()),
         ('log_reg',LogisticRegression())
     ])

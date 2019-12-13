@@ -92,14 +92,14 @@ def chooseBestFeatureToSplit(dataSet):
         featList = [example[i] for example in dataSet]
         #创建set集合{}，元素不可重复
         uniqueVals = set(featList)
-        print("uniqueVals%s"%uniqueVals)
+        # print("uniqueVals%s"%uniqueVals)
         #经验条件熵
         newEntropy = 0.0
         #计算信息增益
         for value in uniqueVals:
             #subDataSet划分后的子集
             subDataSet = splitDataSet(dataSet, i, value)
-            print("subDataSet%s"%subDataSet)
+            # print("subDataSet%s"%subDataSet)
             #计算子集的概率
             prob = len(subDataSet) / float(len(dataSet))
             #根据公式计算经验条件熵
@@ -134,7 +134,7 @@ def splitDataSet(dataSet,axis,value):
     for featVec in dataSet:
         if featVec[axis]==value:
             reducedFeatVec=featVec[:axis]
-            reducedFeatVec.extend(featVec[axis+1:])
+            reducedFeatVec.extend(featVec[axis+1:])   # 在列表末尾一次性追加另一个序列中的多个值
             retDataSet.append(reducedFeatVec)
     return retDataSet
 
