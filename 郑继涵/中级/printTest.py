@@ -9,4 +9,5 @@ days = 365
 for i in range(days):
     print("#",end="",flush=True)
     print('\r',"进度：{0}%".format(round((i+1)*100/days)),end="",flush=True)
+    #     print('\r',"进度：%d%%"%(round((i+1)*100/days)),end="",flush=True)
     time.sleep(0.1)

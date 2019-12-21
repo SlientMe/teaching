@@ -9,7 +9,7 @@ np.random.seed(0) # 让每次运行程序生成的随机样本点不变
 # np._r表示将矩阵在行方向上进行相连
 # random.randn(a,b)表示生成 a 行 b 列的矩阵，且随机数服从标准正态分布
 # array(20,2) - [2,2] 相当于给每一行的两个数都减去 2
-# X = np.r_[np.random.randn(20, 2) - [2, 2], np.random.randn(20, 2) + [2, 2]]
+X = np.r_[np.random.randn(20, 2) - [2, 2], np.random.randn(20, 2) + [2, 2]]
 X = np.vstack(((np.random.normal(0,1,size=40).reshape(20,-1)-2),(np.random.normal(0,1,40).reshape(20,-1)+2)))
 print(X.shape)
 # 两个类别 每类有 20 个点，Y 为 40 行 1 列的列向量
