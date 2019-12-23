@@ -42,6 +42,7 @@ days = 365
 for i in range(days):
     print("#",end="",flush=True)
     print('\r',"进度：{0}%".format(round((i+1)*100/days)),end="",flush=True)
+    #     print('\r',"进度：%d%%"%(round((i+1)*100/days)),end="",flush=True)
     time.sleep(0.1)
 '''
 
@@ -113,6 +114,13 @@ from calendar import HTMLCalendar
 
 c = HTMLCalendar(firstweekday=6)
 print(c.formatmonth(2018, 8, withyear=False))
+
+
+import datetime
+import calendar
+for i in range(2019,2029):
+    print(datetime.datetime(i,1,1).strftime("%w"))
+    print(calendar.weekday(i,1,1)+1)
 
 '''
 

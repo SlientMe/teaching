@@ -9,7 +9,7 @@ np.random.seed(0) # 让每次运行程序生成的随机样本点不变
 # np._r表示将矩阵在行方向上进行相连
 # random.randn(a,b)表示生成 a 行 b 列的矩阵，且随机数服从标准正态分布
 # array(20,2) - [2,2] 相当于给每一行的两个数都减去 2
-X = np.r_[np.random.randn(20, 2) - [2, 2], np.random.randn(20, 2) + [2, 2]]
+# X = np.r_[np.random.randn(20, 2) - [2, 2], np.random.randn(20, 2) + [2, 2]]
 X = np.vstack(((np.random.normal(0,1,size=40).reshape(20,-1)-2),(np.random.normal(0,1,40).reshape(20,-1)+2)))
 print(X.shape)
 # 两个类别 每类有 20 个点，Y 为 40 行 1 列的列向量
@@ -23,6 +23,7 @@ clf.fit(X, Y)
 # 将其转化为点斜式方程，并把 x0 看作 x，x1 看作 y，b 看作 w2
 # 点斜式：y = -(w0/w1)x - (w2/w1)
 w = clf.coef_[0]  # w 是一个二维数据，coef 就是 w = [w0,w1]
+print("w is %s"%w)
 a = -w[0] / w[1]  # 斜率
 xx = np.linspace(-5, 5,50)  # 从 -5 到 5 产生一些连续的值（随机的）
 # .intercept[0] 获得 bias，即 b 的值，b / w[1] 是截距
