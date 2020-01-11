@@ -160,28 +160,41 @@ if __name__ == '__main__':
 
 '''
 '''
-from abc import ABCMeta, abstractmethod
-class Pet(object, metaclass=ABCMeta):
-    """宠物"""
-    def __init__(self, nickname):
-        self._nickname = nickname
-    @abstractmethod
-    def make_voice(self):
-        """发出声音"""
-        pass
-class Dog(Pet):
-    """狗"""
-    def make_voice(self):
-        print('%s: 汪汪汪...' % self._nickname)
-class Cat(Pet):
-    """猫"""
-    def make_voice(self):
-        print('%s: 喵...喵...' % self._nickname)
-def main():
-    pets = [Dog('旺财'), Cat('凯蒂'), Dog('大黄')]
-    for pet in pets:
-        pet.make_voice()
-if __name__ == '__main__':
-    main()
+class Animal:
+
+    def kind(self):
+        print("i am animal")
+
+
+class Dog(Animal):
+
+    def kind(self):
+        print("i am a dog")
+
+
+class Cat(Animal):
+
+    def kind(self):
+        print("i am a cat")
+
+
+class Pig(Animal):
+
+    def kind(self):
+        print("i am a pig")
+
+# 这个函数接收一个animal参数，并调用它的kind方法
+def show_kind(animal):
+    animal.kind()
+
+
+d = Dog()
+c = Cat()
+p = Pig()
+
+show_kind(d)
+show_kind(c)
+show_kind(p)
+
 '''
 
