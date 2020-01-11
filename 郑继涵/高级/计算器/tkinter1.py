@@ -5,7 +5,7 @@ window = tk.Tk()
 # 第2步，给窗口的可视化起名字
 window.title("test")
 # 第3步，设定窗口的大小(长 * 宽)
-window.geometry("500x500+200+300")   # 这里的乘号是小x
+window.geometry("500x500")   # 这里的乘号是小x
 
 window.resizable(0,0)                 # 设置主窗口的宽度和高度是否可以通过鼠标进行拉伸改变，此处设置为不能
 

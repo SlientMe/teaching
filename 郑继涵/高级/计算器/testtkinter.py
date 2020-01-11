@@ -12,8 +12,8 @@ var = tk.StringVar()    # 将label标签的内容设置为字符类型，用var�
 # StringVar()是Tk库内部定义的字符串变量类型，可以用它来显示计算内容，set()用来改变值，get()用来获取值。
 var.set("Test")
 l = tk.Label(window, textvariable=var, bg='green', font=('Arial', 12), width=10, height=2)
-# l.pack()
-l.place(relx = 0,rely = 0,relwidth = 1.0)  # Label内容content区域放置位置，自动调节尺寸
+l.pack()
+# l.place(relx = 0,rely = 0,relwidth = 1.0)  # Label内容content区域放置位置，自动调节尺寸
 
 on_hit = False
 def hit_me(test):
@@ -29,6 +29,7 @@ def hit_me(test):
 
 b = tk.Button(window, text='hi', font=('Arial', 12), width=10, height=1, command=lambda:hit_me(1))
 # b.place(relx = 0,rely = 0.2,relwidth = 1.0)
-b.grid(row=1, column=1)
+b.pack()
+# b.grid(row=1, column=1)
 
 window.mainloop()
